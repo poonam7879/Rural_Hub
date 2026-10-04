@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}List Barter Item - Rural Hub{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto; padding: 2rem; background: var(--bg-card); border-radius: var(--border-radius); box-shadow: var(--box-shadow);">
+    <h2 class="mb-2">List Item for Exchange</h2>
+    
+    <div class="alert alert-info">
+        <strong>Cashless Trade:</strong> Bartering involves exchanging goods or services directly without money.
+    </div>
+    
+    <form method="POST" action="{{ url_for('barter.add') }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="form-label" for="title">What are you offering?</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="e.g. 50kg Wheat" required>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="desired_item">What do you want in return?</label>
+            <input type="text" id="desired_item" name="desired_item" class="form-control" placeholder="e.g. 2 days of tractor usage" required>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="location">Location (Village/District)</label>
+            <input type="text" id="location" name="location" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="description">Description of your item</label>
+            <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="image">Upload Image (Max 5MB)</label>
+            <input type="file" id="image" name="image" class="form-control" accept="image/jpeg, image/png, image/webp">
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%;">List for Barter</button>
+    </form>
+</div>
+{% endblock %}

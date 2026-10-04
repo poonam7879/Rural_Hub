@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Scrap Marketplace - Rural Hub{% endblock %}
+
+{% block content %}
+<div class="flex flex-between mb-2">
+    <h2>Scrap Marketplace</h2>
+    {% if current_user.is_authenticated and current_user.role == 'user' %}
+        <a href="{{ url_for('scrap.add') }}" class="btn btn-primary">+ List Scrap Item</a>
+    {% endif %}
+</div>
+
+{% if items %}
+<div class="grid grid-3">
+    {% for item in items %}
+    <div class="card">
+        {% if item.image_url %}
+            <img src="{{ item.image_url }}" alt="{{ item.title }}" class="card-img">
+        {% else %}
+            <div style="height: 200px; background: #E0E0E0; display: flex; align-items: center; justify-content: center; color: #757575;">
+                No Image
+            </div>
+        {% endif %}
+        <div class="card-body">
+            <h3 class="card-title">{{ item.title }}</h3>
+            <p class="mb-1" style="color: var(--text-secondary);">
+                <strong>Category:</strong> {{ item.category }}<br>
+                <strong>Quantity:</strong> {{ item.quantity }}<br>
+                <strong>Location:</strong> {{ item.location }}
+            </p>
+            <a href="{{ url_for('scrap.details', item_id=item.id) }}" class="btn btn-outline" style="width: 100%;">View Details</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center mt-3" style="padding: 3rem; background: var(--bg-card); border-radius: var(--border-radius);">
+    <h3>No active scrap listings found.</h3>
+    <p>Check back later or list your own scrap.</p>
+</div>
+{% endif %}
+{% endblock %}
