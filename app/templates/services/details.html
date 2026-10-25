@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.service_name }} - Rural Hub{% endblock %}
+
+{% block content %}
+<div class="mb-1">
+    <a href="{{ url_for('services.index') }}">&larr; Back to Services</a>
+</div>
+
+<div class="grid" style="grid-template-columns: 2fr 1fr; gap: 2rem;">
+    <!-- Service Info -->
+    <div class="card">
+        <div class="card-body">
+            <div class="flex flex-between mb-1">
+                <h2>{{ service.service_name }}</h2>
+                <span class="badge {% if service.status == 'active' %}badge-active{% else %}badge-closed{% endif %}">
+                    {{ service.status | capitalize }}
+                </span>
+            </div>
+            
+            <h3 style="color: var(--primary-color);">₹{{ service.price }}</h3>
+            
+            <div class="mt-2 mb-2">
+                <p><strong>Provider:</strong> {{ service.provider.name }}</p>
+                <p><strong>Contact:</strong> {{ service.provider.mobile }}</p>
+                <p><strong>Location:</strong> {{ service.location }}</p>
+                <p><strong>Availability:</strong> {{ service.availability }}</p>
+            </div>
+            
+            <h4>Description</h4>
+            <p>{{ service.description }}</p>
+        </div>
+    </div>
+
+    <!-- Booking Form -->
+    <div>
+        <div class="card">
+            <div class="card-body">
+                <h3>Book Service</h3>
+                {% if current_user.is_authenticated %}
+                    {% if current_user.id != service.provider_id %}
+                        {% if service.status == 'active' %}
+                            <form method="POST" action="{{ url_for('services.book', service_id=service.id) }}">
+                                <div class="form-group mt-1">
+                                    <label class="form-label" for="booking_date">Requested Date</label>
+                                    <input type="date" id="booking_date" name="booking_date" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">Request Booking</button>
+                            </form>
+                        {% else %}
+                            <div class="alert alert-warning">This service is currently unavailable.</div>
+                        {% endif %}
+                    {% else %}
+                        <div class="alert alert-info">You cannot book your own service.</div>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-info">
+                        Please <a href="{{ url_for('auth.login') }}">login</a> to book services.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Rural Hub{% endblock %}
+
+{% block content %}
+<div style="max-width: 450px; margin: 2rem auto; background: var(--bg-card); border-radius: var(--border-radius); box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden;">
+    <div style="background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80') center/cover; height: 120px; display: flex; align-items: center; justify-content: center; position: relative;">
+        <div style="position: absolute; inset: 0; background: rgba(46, 125, 50, 0.6);"></div>
+        <h2 style="color: white; margin: 0; position: relative; z-index: 1;">Welcome Back</h2>
+    </div>
+    
+    <div style="padding: 2rem;">
+        <form method="POST" action="{{ url_for('auth.login') }}">
+            <div class="form-group">
+                <label class="form-label" for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="you@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+        </form>
+        
+        <div class="text-center mt-2">
+            <p>Don't have an account? <a href="{{ url_for('auth.register') }}" style="font-weight: 600;">Sign Up</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}Rural Hub - Home{% endblock %}
+
+{% block extra_css %}
+<style>
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url("{{ url_for('static', filename='img/village_sunset.png') }}") center/cover no-repeat !important;
+    color: #ffffff;
+    padding: 7rem 2rem;
+    text-align: center;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.hero h1 {
+    color: #ffffff;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
+}
+
+.hero p {
+    font-size: 1.3rem;
+    max-width: 650px;
+    margin: 0 auto 2.5rem;
+    color: #f5f5f5;
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
+}
+
+/* Quick Options Banner */
+.quick-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 4rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.quick-option-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-color);
+    border-radius: 50px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.quick-option-item:hover {
+    background: var(--primary-light);
+    color: white;
+    transform: translateY(-2px);
+    border-color: var(--primary-dark);
+}
+
+.features {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2.5rem;
+}
+
+.feature-card {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    overflow: hidden;
+    position: relative;
+    border-top: 5px solid var(--secondary-color);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.feature-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.feature-content {
+    padding: 2rem;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    padding: 1rem;
+    background: var(--bg-color);
+    border-radius: 50%;
+    color: var(--primary-color);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Secondary Section */
+.info-section {
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: white;
+    padding: 4rem 2rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.info-section h2 {
+    color: white;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Empowering Rural Communities</h1>
+    <p>A vibrant digital platform for transparent scrap bidding, local service booking, and cashless barter exchange.</p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ url_for('auth.register') }}" class="btn" style="background-color: var(--secondary-color); color: white; padding: 0.8rem 2rem; font-size: 1.1rem; border-radius: 50px;">Join the Community</a>
+        <a href="{{ url_for('main.about') }}" class="btn btn-outline" style="color: white; border-color: white; padding: 0.8rem 2rem; font-size: 1.1rem; border-radius: 50px;">Learn More</a>
+    </div>
+</div>
+
+<div class="quick-options">
+    <a href="{{ url_for('main.mandi') }}" class="quick-option-item"><span>🌾</span> Mandi Prices</a>
+    <a href="{{ url_for('main.weather') }}" class="quick-option-item"><span>🌤️</span> Weather Forecast</a>
+    <a href="{{ url_for('services.index', location='Tractor') }}" class="quick-option-item"><span>🚜</span> Tractor Rentals</a>
+    <a href="{{ url_for('scrap.add') }}" class="quick-option-item"><span>♻️</span> Sell E-Waste</a>
+    <a href="{{ url_for('main.forum') }}" class="quick-option-item"><span>🗣️</span> Community Forum</a>
+</div>
+
+<div class="features">
+    <h2>Our Core Modules</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Scrap Metal">
+            <div class="feature-content">
+                <div class="feature-icon">♻️</div>
+                <h3>Scrap Marketplace</h3>
+                <p>Connect with verified dealers for transparent, competitive bidding on agricultural and household scrap.</p>
+                <a href="{{ url_for('scrap.index') }}" class="btn btn-outline mt-1" style="border-color: var(--primary-color);">Browse Scrap</a>
+            </div>
+        </div>
+        
+        <div class="feature-card" style="border-top-color: var(--tertiary-color);">
+            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Tractor Repair">
+            <div class="feature-content">
+                <div class="feature-icon" style="color: var(--tertiary-color);">🛠️</div>
+                <h3>Local Services</h3>
+                <p>Find and book reliable local service providers, from tractor repairs to plumbing and electrical work.</p>
+                <a href="{{ url_for('services.index') }}" class="btn btn-outline mt-1" style="border-color: var(--tertiary-color); color: var(--tertiary-color);">Find Services</a>
+            </div>
+        </div>
+        
+        <div class="feature-card" style="border-top-color: var(--accent-color);">
+            <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Barter Exchange">
+            <div class="feature-content">
+                <div class="feature-icon" style="color: var(--accent-color);">🤝</div>
+                <h3>Barter Exchange</h3>
+                <p>Trade goods and services directly with neighbors in a cashless, community-driven marketplace.</p>
+                <a href="{{ url_for('barter.index') }}" class="btn btn-outline mt-1" style="border-color: var(--accent-color); color: var(--accent-color);">Explore Barter</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="info-section">
+    <h2>Built for the Future of Rural India</h2>
+    <p style="font-size: 1.2rem; max-width: 700px; margin: 1rem auto 2rem;">Experience a fully digital, accessible, and inclusive platform designed specifically to uplift the rural economy.</p>
+    <a href="{{ url_for('auth.register') }}" class="btn" style="background: white; color: var(--secondary-dark); font-weight: bold; padding: 1rem 2rem; border-radius: 50px;">Create a Free Account</a>
+</div>
+{% endblock %}

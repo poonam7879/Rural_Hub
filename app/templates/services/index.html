@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Local Services - Rural Hub{% endblock %}
+
+{% block content %}
+<div class="flex flex-between mb-2">
+    <h2>Local Services</h2>
+    {% if current_user.is_authenticated and current_user.role == 'service_provider' %}
+        <a href="{{ url_for('services.add') }}" class="btn btn-primary">+ List New Service</a>
+    {% endif %}
+</div>
+
+<!-- Filter Section -->
+<div class="card mb-2" style="padding: 1rem;">
+    <form method="GET" action="{{ url_for('services.index') }}" style="display: flex; gap: 1rem; align-items: flex-end;">
+        <div style="flex: 1;">
+            <label class="form-label" for="location">Filter by Location</label>
+            <input type="text" id="location" name="location" class="form-control" placeholder="Enter village or district..." value="{{ request.args.get('location', '') }}">
+        </div>
+        <button type="submit" class="btn btn-secondary">Search</button>
+        <a href="{{ url_for('services.index') }}" class="btn btn-outline">Clear</a>
+    </form>
+</div>
+
+{% if services %}
+<div class="grid grid-3">
+    {% for service in services %}
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">{{ service.service_name }}</h3>
+            <p class="mb-1" style="color: var(--text-secondary);">
+                <strong>Provider:</strong> {{ service.provider.name }}<br>
+                <strong>Location:</strong> {{ service.location }}<br>
+                <strong>Price:</strong> ₹{{ service.price }}
+            </p>
+            <p class="mb-1" style="font-size: 0.9rem; height: 3em; overflow: hidden; text-overflow: ellipsis;">
+                {{ service.description }}
+            </p>
+            <a href="{{ url_for('services.details', service_id=service.id) }}" class="btn btn-outline" style="width: 100%;">View Service</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center mt-3" style="padding: 3rem; background: var(--bg-card); border-radius: var(--border-radius);">
+    <h3>No services found.</h3>
+    <p>Try clearing your filters or check back later.</p>
+</div>
+{% endif %}
+{% endblock %}
